@@ -441,9 +441,12 @@ public class AnalyzerHtmlProvider {
 			String word = words.nextToken();
 
 			// Si encontramos un número, se añade a la lista de números
-			if (word.matches("^[0-9]+([.][0-9]*?)?$")) {
+			String word1 = word.replace(".", "");
 
-				numbers.add(Double.parseDouble(word));
+			if (word1.matches("^[0-9]+([,][0-9]*?)?$")) {
+
+				word1 = word1.replace(",", ".");
+				numbers.add(Double.parseDouble(word1));
 
 			}
 			// Si encontramos un número romano, se añade a la lista de los números romanos:
@@ -499,6 +502,10 @@ public class AnalyzerHtmlProvider {
 				positionFinalSentence.add(i);
 			}
 
+		}
+		if (!positionFinalSentence.contains(charsText.length - 1)) {
+
+			positionFinalSentence.add(charsText.length - 1);
 		}
 
 		if (!positionFinalSentence.isEmpty()) {
