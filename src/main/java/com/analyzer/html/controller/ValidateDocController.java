@@ -1116,15 +1116,24 @@ public class ValidateDocController {
 								}
 							}
 
-							// Serializamos la lista de reglas
-							Gson prettyGson = new GsonBuilder().setPrettyPrinting().create();
-							String ruleJson = prettyGson.toJson(listRules);
+							if(!listRules.isEmpty()) {
+								// Serializamos la lista de reglas
+								Gson prettyGson = new GsonBuilder().setPrettyPrinting().create();
+								String ruleJson = prettyGson.toJson(listRules);
 
-							HttpHeaders headers = new HttpHeaders();
-							headers.add("Content-Type", "application/json;charset=UTF-8");
+								HttpHeaders headers = new HttpHeaders();
+								headers.add("Content-Type", "application/json;charset=UTF-8");
 
-							logger.info("Se ha llevado a cabo la validación de la regla correctamente");
-							return new ResponseEntity<>(ruleJson, headers, HttpStatus.OK);
+								logger.info("Se ha llevado a cabo la validación de la regla correctamente");
+								return new ResponseEntity<>(ruleJson, headers, HttpStatus.OK);
+							}
+							else {
+								
+								logger.error("Las reglas solicitadas no están activas");
+								return new ResponseEntity<>(pMess.getProperty("cmu-errors.notActiveRules"),
+										HttpStatus.OK);
+							}
+
 
 						} else {
 
