@@ -442,6 +442,8 @@ public class AnalyzerHtmlProvider {
 
 			// Si encontramos un número, se añade a la lista de números
 			String word1 = word.replace(".", "");
+			
+			String word2 = word1.replace(",","");
 
 			if (word1.matches("^[0-9]+([,][0-9]*?)?$")) {
 
@@ -450,23 +452,23 @@ public class AnalyzerHtmlProvider {
 
 			}
 			// Si encontramos un número romano, se añade a la lista de los números romanos:
-			else if (word.matches("^M{0,4}(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})$")) {
-				romansNum.add(word);
+			else if (word2.matches("^M{0,4}(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})$")) {
+				romansNum.add(word2);
 			}
 			// Si encontramos una palabra en mayúsculas (y esta no es un número romano), se
 			// incrementa el contador de mayúsculas
-			else if (word.matches("^[A-Z]*")
-					&& !word.matches("^M{0,4}(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})$")) {
+			else if (word2.matches("^[A-Z,Á,É,Í,Ó,Ú]*")
+					&& !word2.matches("^M{0,4}(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})$")) {
 
 				cntUppercase++;
 
 			}
 			// Si encontramos una fecha en este formato, se añade a la lista de fechas
 			// incorrectas
-			else if (word.matches("^\\d{2}-\\d{2}-\\d{4}$") || word.matches("^\\d{4}-\\d{2}-\\d{2}$")
-					|| word.matches("^\\d{2}/\\d{2}/\\d{4}$") || word.matches("^\\d{4}/\\d{2}/\\d{2}$")) {
+			else if (word2.matches("^\\d{2}-\\d{2}-\\d{4}$") || word2.matches("^\\d{4}-\\d{2}-\\d{2}$")
+					|| word2.matches("^\\d{2}/\\d{2}/\\d{4}$") || word2.matches("^\\d{4}/\\d{2}/\\d{2}$")) {
 
-				wrongDateFormat.add(word);
+				wrongDateFormat.add(word2);
 			}
 
 		}
